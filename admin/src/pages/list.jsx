@@ -46,11 +46,11 @@ const list = ({token}) => {
 
     return (
         <>
-            <p className="mb-4  ">All Products List</p>
+            <p className="mb-4 text-lg  ">All Products List</p>
             <div className="flex flex-col gap-2">
                 {/*table list*/}
-                <div className="hidden md:grid grid-cols-[1fr_3fr_1fr_1fr_1fr_1fr] items-center py-1 px-2 border bg-gray-200 text-sm">
-                    <b>Image</b>
+                <div className="grid grid-cols-4  items-center py-2 px-4 border-b bg-gray-100 text-sm font-semibold">
+                    {/*<b>Image</b>*/}
                     <b className="px-6">Name</b>
                     <b className="px-12">Category</b>
                     <b className="px-14">Price</b>
@@ -60,12 +60,12 @@ const list = ({token}) => {
                 {/*table list*/}
                 {
                     List.map((item, index)=> (
-                        <div className=" overflow-x-auto grid grid-cols-[1fr_3fr_1fr] md:grid-cols-[1fr_3fr_1fr_1fr_1fr] items-center gap-2 px-2 py-1 border text-sm" key={index}>
-                            <img className="w-6" src={item.image[0]} />
-                            <p className="">{item.name}</p>
-                            <p>{item.category}</p>
-                            <p>{currency}{item.price}</p>
-                            <p onClick={()=>removeProduct(item._id)} className="text-right md:text-center  text-lg cursor-pointer">X</p>
+                        <div className=" grid grid-cols-4  items-center py-2 px-4 border-b text-sm" key={index}>
+                            {/*<img className="" src={item.image[0]} />*/}
+                            <p className="px-4">{item.name}</p>
+                            <p className="px-14">{item.category}</p>
+                            <p className="px-14">{currency}{item.price}</p>
+                            <p onClick={()=>removeProduct(item._id)} className="text-right md:text-center  text-lg  text-red-500 font-bold cursor-pointer">X</p>
                         </div>
 
                     ))

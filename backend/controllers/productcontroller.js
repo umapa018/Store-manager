@@ -1,5 +1,24 @@
 import { v2 as cloudinary } from 'cloudinary'
 import productmodel from '../models/productmodel.js';
+
+/*const restartServer = () => {
+    if (process.env.NODE_ENV === 'development') {
+        console.log('Restarting server...');
+        exec('npm run dev', (error, stdout, stderr) => {
+            if (error) {
+                console.error(`Error restarting server: ${error.message}`);
+                return;
+            }
+            if (stderr) {
+                console.error(`Error details: ${stderr}`);
+            }
+            console.log(stdout);
+        });
+        process.exit(0); // Gracefully exit current process
+    }
+};*/
+
+
 // add product func
 const addProduct = async (req, res) => {
     try {
@@ -12,6 +31,7 @@ const addProduct = async (req, res) => {
         //sending img to cloudinary
         let imagesUrl = await Promise.all(
             images.map(async (item) => {
+                if (!item.path) throw new Error("Image path is missing");
                 let result = await cloudinary.uploader.upload(item.path, { resource_type: 'image' });
                 return result.secure_url
             })
@@ -30,11 +50,8 @@ const addProduct = async (req, res) => {
         await product.save()
 
         res.json({ success: true, message: "Product Added" })
-
         console.log(name, description, price, quantity, category)
         console.log(imagesUrl)
-
-        res.json({})
 
     } catch (error) {
         console.log(error)

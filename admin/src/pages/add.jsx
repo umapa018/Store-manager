@@ -6,7 +6,6 @@ import { backendUrl } from '../App'
 import { toast } from 'react-toastify'
 
 const add = ({token}) => {
-
     const [image1, setImage1] = useState(false)
     const [image2, setImage2] = useState(false)
 
@@ -24,8 +23,8 @@ const add = ({token}) => {
 
             formData.append("name",name)
             formData.append("description",description)
-            formData.append("price",price)
-            formData.append("quantity",quantity)
+            formData.append("price",Number(price))
+            formData.append("quantity",Number(quantity))
             formData.append("category",category)
 
             //if image avail then append
@@ -33,7 +32,7 @@ const add = ({token}) => {
             image2 && formData.append("image2",image2)
 
             //backend connection  to send data
-            const response = await axios.post(backendUrl + "/api/product/add",formData,{headers:{token}})
+            const response = await axios.post(backendUrl + "/api/product/add",formData,{headers:{token},});
 
             if(response.data.success){
                 toast.success(response.data.message)
@@ -52,17 +51,14 @@ const add = ({token}) => {
             
         }
     }
-
-
-
-
     return (
         <form onSubmit={onSubmitHandler} className='flex flex-col items-start w-full gap-3'>
             <div >
-                <p className='mb-2'>Upload Image</p>
+
+                {/*<p className='mb-2'>Upload Image X </p>
                 <div className='flex gap-2'>
                     <label htmlFor="image1">
-                        <img className='w-28 ' src={image1 ? URL.createObjectURL(image1) : upload} alt="" />
+                        <img className='w-28' src={image1 ? URL.createObjectURL(image1) : upload} alt="" />
                         <input onChange={(e) => setImage1(e.target.files[0])} type='file' id="image1" hidden ></input>
                     </label>
 
@@ -70,7 +66,7 @@ const add = ({token}) => {
                         <img className='w-28' src={image2 ? URL.createObjectURL(image2) : upload} alt="" />
                         <input onChange={(e) => setImage2(e.target.files[0])} type='file' id="image2" hidden ></input>
                     </label>
-                </div>
+                </div>*/}
 
             </div>
             <div className='w-full'>
@@ -100,7 +96,7 @@ const add = ({token}) => {
                     <input onChange={(e) => setQuantity(e.target.value)} value={quantity} className='w-full px-3 py-2 sm:w-[120px]' type='Number' placeholder='5'></input>
                 </div>
             </div>
-            <button className='w-28 py-3 mt-4 bg-green-500 text-white rounded-full font-bold  ' type='submit'>ADD</button>
+            <button className='w-28 py-3 mt-4 bg-green-500 text-white rounded-full font-bold' type='submit'>ADD</button>
         </form>
     )
 }
